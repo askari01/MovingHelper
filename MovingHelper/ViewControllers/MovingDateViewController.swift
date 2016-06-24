@@ -9,7 +9,7 @@
 import UIKit
 
 public protocol MovingDateDelegate {
-  func createdMovingTasks(tasks: [Task])
+  func createdMovingTasks(_ tasks: [Task])
   func updatedMovingDate()
 }
 
@@ -31,15 +31,15 @@ class MovingDateViewController: UIViewController {
     //Localize strings
     whenMovingLabel.text = LocalizedStrings.whenMovingTitle
     
-    whenMovingDatePicker.minimumDate = NSDate.startOfToday()
+    whenMovingDatePicker.minimumDate = Date.startOfToday()
     
-    if let movingDate = NSUserDefaults.standardUserDefaults().objectForKey(UserDefaultKey.MovingDate.rawValue) as? NSDate {
+    if let movingDate = UserDefaults.standard().object(forKey: UserDefaultKey.MovingDate.rawValue) as? Date {
       whenMovingDatePicker.date = movingDate
-      createTasksButton.setTitle(LocalizedStrings.updateDate, forState: .Normal)
+      createTasksButton.setTitle(LocalizedStrings.updateDate, for: UIControlState())
     } else {
       whenMovingDatePicker.date = twoMonthsFromToday()
       createTasksButton.setTitle(LocalizedStrings.createTasks,
-        forState: .Normal)
+        for: UIControlState())
     }
     
     datePickerChanged()
@@ -47,14 +47,14 @@ class MovingDateViewController: UIViewController {
   
   //MARK: Date helpers
   
-  func twoMonthsFromToday() -> NSDate {
-    let currentCalendar = NSCalendar.currentCalendar()
+  func twoMonthsFromToday() -> Date {
+    let currentCalendar = Calendar.current()
     
-    let today = NSDate.startOfToday()
-    let twoMonths = NSDateComponents()
+    let today = Date.startOfToday()
+    var twoMonths = DateComponents()
     twoMonths.month = 2
-    let updatedDate = currentCalendar.dateByAddingComponents(twoMonths,
-      toDate: today,
+    let updatedDate = currentCalendar.date(byAdding: twoMonths,
+      to: today,
       options: [])
     return updatedDate!
   }
@@ -63,14 +63,14 @@ class MovingDateViewController: UIViewController {
   
   @IBAction func datePickerChanged() {
     let updatedDate = whenMovingDatePicker.date.startOfDay()
-    let today = NSDate.startOfToday()
+    let today = Date.startOfToday()
     
-    let components = NSCalendar.currentCalendar().components(.Day,
-      fromDate: today,
-      toDate: updatedDate,
+    let components = Calendar.current().components(.day,
+      from: today,
+      to: updatedDate,
       options: [])
     
-    daysLeftLabel.text = NSString(format: LocalizedStrings.daysLeftFormat, components.day) as String
+    daysLeftLabel.text = NSString(format: LocalizedStrings.daysLeftFormat, components.day!) as String
   }
   
   @IBAction func createTasks() {
@@ -83,10 +83,10 @@ class MovingDateViewController: UIViewController {
     }
     
     //In any case, we should update the moving date and notify the delegate it was updated.
-    NSUserDefaults.standardUserDefaults().setObject(updatedDate, forKey: UserDefaultKey.MovingDate.rawValue)
-    NSUserDefaults.standardUserDefaults().synchronize()
+    UserDefaults.standard().set(updatedDate, forKey: UserDefaultKey.MovingDate.rawValue)
+    UserDefaults.standard().synchronize()
     delegate?.updatedMovingDate()
     
-    dismissViewControllerAnimated(true, completion: nil)
+    dismiss(animated: true, completion: nil)
   }
 }

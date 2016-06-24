@@ -23,14 +23,14 @@ class TaskTests: XCTestCase {
   
   //MARK: - Private Helper Functions
   
-  private func checkDeserializationForTaskProperties(title: String,
+  private func checkDeserializationForTaskProperties(_ title: String,
     dueDate: TaskDueDate,
     taskID: Int,
     notes: String?,
     done: Bool) {
       
       let testTaskDict = [
-        TaskJSONKey.Done.rawValue: NSNumber(bool: done),
+        TaskJSONKey.Done.rawValue: NSNumber(value: done),
         TaskJSONKey.Title.rawValue: title,
         TaskJSONKey.TaskID.rawValue: taskID,
         TaskJSONKey.Notes.rawValue: notes ?? NSNull(),
@@ -103,7 +103,7 @@ class TaskTests: XCTestCase {
     }
     
     if let retrievedTaskID = jsonDict[TaskJSONKey.TaskID.rawValue] as? NSNumber {
-      XCTAssertEqual(retrievedTaskID.integerValue, taskID, "Task ID value incorrect!")
+      XCTAssertEqual(retrievedTaskID.intValue, taskID, "Task ID value incorrect!")
     } else {
       XCTFail("Task ID did not serialize!")
     }

@@ -20,7 +20,7 @@ public struct TaskSaver {
   :param: The tasks to write out.
   :param: The file name to use when writing out the file.
   */
-  static func writeTasksToFile(tasks: [Task], fileName: FileName) {
+  static func writeTasksToFile(_ tasks: [Task], fileName: FileName) {
     let dictionaries = tasks.map {
       task in
       return task.asJson()
@@ -29,9 +29,9 @@ public struct TaskSaver {
     var error: NSError?
     let fullFilePath = fileName.jsonFileName().pathInDocumentsDirectory()
     do {
-      let jsonData = try NSJSONSerialization.dataWithJSONObject(dictionaries,
-        options: .PrettyPrinted)
-        jsonData.writeToFile(fullFilePath, atomically: true)
+      let jsonData = try JSONSerialization.data(withJSONObject: dictionaries,
+        options: .prettyPrinted)
+        try? jsonData.write(to: URL(fileURLWithPath: fullFilePath), options: [.dataWritingAtomic])
     } catch let error1 as NSError {
       error = error1
     }
@@ -41,13 +41,13 @@ public struct TaskSaver {
     }
   }
   
-  public static func nukeTaskFile(fileName: FileName) {
+  public static func nukeTaskFile(_ fileName: FileName) {
     let fullFilePath = fileName.jsonFileName().pathInDocumentsDirectory()
     var error: NSError?
     
     do {
-      try NSFileManager.defaultManager()
-        .removeItemAtPath(fullFilePath)
+      try FileManager.default()
+        .removeItem(atPath: fullFilePath)
     } catch let error1 as NSError {
       error = error1
     }

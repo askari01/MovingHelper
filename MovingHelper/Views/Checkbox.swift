@@ -19,9 +19,9 @@ public class Checkbox: UIButton {
   public var isChecked = false {
     didSet {
       if isChecked {
-        self.setTitle("✔︎", forState: .Normal)
+        self.setTitle("✔︎", for: UIControlState())
       } else {
-        self.setTitle("", forState: .Normal)
+        self.setTitle("", for: UIControlState())
       }
     }
   }
@@ -32,12 +32,12 @@ public class Checkbox: UIButton {
     super.awakeFromNib()
     
     //Setup styles
-    self.layer.borderColor = UIColor.blackColor().CGColor
+    self.layer.borderColor = UIColor.black().cgColor
     self.layer.borderWidth = 1
     self.layer.cornerRadius = 4
     
     //Note: Removing the UIColor from .blackColor() here causes a Swift
     // compiler error as of Xcode 6.3.2
-    self.setTitleColor(UIColor.blackColor(), forState:.Normal)
+    self.setTitleColor(UIColor.black(), for:UIControlState())
   }
 }

@@ -23,9 +23,9 @@ public enum UserDefaultKey: String {
   LastAddedTaskID = "com.razeware.movinghelper.lastaddedtaskid"
   
   public static func resetAll() {
-    let defaults = NSUserDefaults.standardUserDefaults()
-    defaults.removeObjectForKey(MovingDate.rawValue)
-    defaults.removeObjectForKey(LastAddedTaskID.rawValue)
+    let defaults = UserDefaults.standard()
+    defaults.removeObject(forKey: MovingDate.rawValue)
+    defaults.removeObject(forKey: LastAddedTaskID.rawValue)
     defaults.synchronize()
   }
 }

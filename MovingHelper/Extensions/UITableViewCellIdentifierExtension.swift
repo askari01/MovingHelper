@@ -23,7 +23,7 @@ public extension UITableViewCell {
     
     //This grabs a string that is [project name].[class name]
     
-    let pieces = classString.componentsSeparatedByString(".")
+    let pieces = classString.components(separatedBy: ".")
     
     if pieces.count == 2 {
       return pieces[1]

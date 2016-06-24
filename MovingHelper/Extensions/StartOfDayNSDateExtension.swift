@@ -11,19 +11,19 @@ import Foundation
 /**
 A quick extension to save having to grab NSCalendar references everywhere.
 */
-extension NSDate {
+extension Date {
   
   /**
   The start of the day per NSCalendar rules for the receiver.
   */
-  func startOfDay() -> NSDate {
-    return NSCalendar.currentCalendar().startOfDayForDate(self)
+  func startOfDay() -> Date {
+    return Calendar.current().startOfDay(for: self)
   }
   
   /**
   The start of the current day per NSCalendar rules for the receiver.
   */
-  static func startOfToday() -> NSDate {
-    return NSDate().startOfDay()
+  static func startOfToday() -> Date {
+    return Date().startOfDay()
   }
 }

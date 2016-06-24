@@ -24,7 +24,7 @@ public extension NSDictionary {
   - parameter key:: The key to use to check the dictionary
   - returns: The found string, or an empty string if it was not found.
   */
-  public func safeString(key: String) -> String {
+  public func safeString(_ key: String) -> String {
     //Is there a value for the key?
     if let item: AnyObject = self[key] {
       //Is that value a string?
@@ -44,11 +44,11 @@ public extension NSDictionary {
   - parameter key:: The key to use to check the dictionary
   - returns: The found number, or zero if it was not found.
   */
-  public func safeInt(key: String) -> Int {
+  public func safeInt(_ key: String) -> Int {
     //Is there a value for the key?
     if let item: AnyObject = self[key] {
       if let number = item as? NSNumber {
-        return number.integerValue
+        return number.intValue
       }
     }
     
@@ -62,7 +62,7 @@ public extension NSDictionary {
   - parameter key:: The key to use to check the dictionary
   - returns: The found boolean value, or false if it was not found.
   */
-  public func safeBoolean(key:String) -> Bool {
+  public func safeBoolean(_ key:String) -> Bool {
     //Is there a value for the key?
     if let item: AnyObject = self[key] {
       if let number = item as? NSNumber {

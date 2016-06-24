@@ -16,7 +16,7 @@ public enum TaskDueDate: String {
   OneWeekAfter = "week_after",
   OneMonthAfter = "month_after"
   
-  static func fromIndex(index: Int) -> TaskDueDate {
+  static func fromIndex(_ index: Int) -> TaskDueDate {
     switch index {
     case 0:
       return OneMonthBefore
@@ -69,14 +69,14 @@ public enum TaskDueDate: String {
     }
   }
   
-  public func isOverdueForMoveDate(moveDate: NSDate) -> Bool {
+  public func isOverdueForMoveDate(_ moveDate: Date) -> Bool {
     let taskDueDate = dueDateForMoveDate(moveDate)
     
-    return taskDueDate.compare(NSDate.startOfToday()) == NSComparisonResult.OrderedAscending
+    return taskDueDate.compare(Date.startOfToday()) == ComparisonResult.orderedAscending
   }
   
-  func dueDateForMoveDate(moveDate: NSDate) -> NSDate {
-    let components = NSDateComponents()
+  func dueDateForMoveDate(_ moveDate: Date) -> Date {
+    var components = DateComponents()
     switch self {
     case .OneMonthBefore:
       components.month = -1
@@ -92,22 +92,22 @@ public enum TaskDueDate: String {
       components.month = 1
     }
     
-    return NSCalendar.currentCalendar().dateByAddingComponents(components, toDate: moveDate, options: [])!
+    return Calendar.current().date(byAdding: components, to: moveDate, options: [])!
   }
   
-  public func daysFromDueDate(moveDate: NSDate) -> String {
+  public func daysFromDueDate(_ moveDate: Date) -> String {
     let taskDueDate = dueDateForMoveDate(moveDate)
     
-    let components = NSCalendar.currentCalendar().components(NSCalendarUnit.Day,
-      fromDate: NSDate.startOfToday(),
-      toDate: taskDueDate,
+    let components = Calendar.current().components(Calendar.Unit.day,
+      from: Date.startOfToday(),
+      to: taskDueDate,
       options: [])
     
     let daysLeft = components.day
     if daysLeft >= 0 {
-      return NSString(format: LocalizedStrings.daysLeftFormat, daysLeft) as String
+      return NSString(format: LocalizedStrings.daysLeftFormat, daysLeft!) as String
     } else {
-      return NSString(format: LocalizedStrings.daysAgoFormat, abs(daysLeft)) as String
+      return NSString(format: LocalizedStrings.daysAgoFormat, daysLeft!) as String
     }
   }
 }

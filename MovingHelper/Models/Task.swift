@@ -69,7 +69,7 @@ public class Task: CustomStringConvertible, Equatable {
     }
     
     let fromJSONNotes = fromJSON.safeString(TaskJSONKey.Notes.rawValue)
-    if fromJSONNotes.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+    if fromJSONNotes.lengthOfBytes(using: String.Encoding.utf8) > 0 {
       notes = fromJSONNotes
     }
     
@@ -82,7 +82,7 @@ public class Task: CustomStringConvertible, Equatable {
   }
   
   
-  static func tasksFromArrayOfJSONDictionaries(arrayOfDictionaries: [NSDictionary]) -> [Task] {
+  static func tasksFromArrayOfJSONDictionaries(_ arrayOfDictionaries: [NSDictionary]) -> [Task] {
     var tasks = [Task]()
     for dict in arrayOfDictionaries {
       tasks.append(Task(fromJSON: dict))
@@ -97,11 +97,11 @@ public class Task: CustomStringConvertible, Equatable {
   - returns: The next sequential identifier so all task identifiers are unique.
   */
   private static func nextIdentifier() -> Int {
-    let defaults = NSUserDefaults.standardUserDefaults()
-    let lastIdentifier = defaults.integerForKey(UserDefaultKey.LastAddedTaskID.rawValue)
+    let defaults = UserDefaults.standard()
+    let lastIdentifier = defaults.integer(forKey: UserDefaultKey.LastAddedTaskID.rawValue)
     let nextIdentifier = lastIdentifier + 1
     
-    defaults.setInteger(nextIdentifier, forKey:UserDefaultKey.LastAddedTaskID.rawValue)
+    defaults.set(nextIdentifier, forKey:UserDefaultKey.LastAddedTaskID.rawValue)
     defaults.synchronize()
     
     return nextIdentifier
@@ -120,7 +120,7 @@ public class Task: CustomStringConvertible, Equatable {
     }
     
     dict.updateValue(dueDate.rawValue, forKey: TaskJSONKey.DueDate.rawValue)
-    dict.updateValue(NSNumber(bool: done), forKey: TaskJSONKey.Done.rawValue)
+    dict.updateValue(NSNumber(value: done), forKey: TaskJSONKey.Done.rawValue)
     
     return dict as NSDictionary
   }

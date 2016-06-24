@@ -13,17 +13,17 @@ Helper struct to split up the array of tasks into sections based on the due date
 */
 struct SectionSplitter {
   
-  private static func tasksForDueDate(dueDate: TaskDueDate, allTasks: [Task]) -> [Task] {
+  private static func tasksForDueDate(_ dueDate: TaskDueDate, allTasks: [Task]) -> [Task] {
     var tasks = allTasks.filter {
       task in
       return task.dueDate == dueDate
     }
     
-    tasks.sortInPlace({ $0.taskID > $1.taskID })
+    tasks.sort(isOrderedBefore: { $0.taskID > $1.taskID })
     return tasks
   }
   
-  static func sectionsFromTasks(allTasks: [Task]) -> [[Task]] {
+  static func sectionsFromTasks(_ allTasks: [Task]) -> [[Task]] {
     let oneMonthBefore = tasksForDueDate(.OneMonthBefore, allTasks: allTasks)
     let oneWeekBefore = tasksForDueDate(.OneWeekBefore, allTasks: allTasks)
     let oneDayBefore = tasksForDueDate(.OneDayBefore, allTasks: allTasks)

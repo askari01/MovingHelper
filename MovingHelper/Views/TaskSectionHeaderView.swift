@@ -17,9 +17,9 @@ public class TaskSectionHeaderView: UITableViewCell {
   //MARK: Properties
   
   //Use a static date formatter since they are expensive to create.
-  static let dateFormatter: NSDateFormatter = {
-    let formatter = NSDateFormatter()
-    formatter.dateStyle = NSDateFormatterStyle.ShortStyle
+  static let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = DateFormatter.Style.shortStyle
     return formatter
     }()
   
@@ -35,16 +35,16 @@ public class TaskSectionHeaderView: UITableViewCell {
   - parameter dueDate:  The due date for the current section
   - parameter moveDate: The user's move date.
   */
-  func configureForDueDate(dueDate: TaskDueDate, moveDate: NSDate) {
+  func configureForDueDate(_ dueDate: TaskDueDate, moveDate: Date) {
     sectionNameLabel.text = dueDate.getTitle()
     
     let taskDueDate = dueDate.dueDateForMoveDate(moveDate)
-    deadlineDateLabel.text = TaskSectionHeaderView.dateFormatter.stringFromDate(taskDueDate)
+    deadlineDateLabel.text = TaskSectionHeaderView.dateFormatter.string(from: taskDueDate)
     
     if dueDate.isOverdueForMoveDate(moveDate) {
-      backgroundColor = UIColor.redColor()
+      backgroundColor = UIColor.red()
     } else {
-      backgroundColor = UIColor.greenColor()
+      backgroundColor = UIColor.green()
     }
     
     fromNowOrAgoLabel.text = dueDate.daysFromDueDate(moveDate)

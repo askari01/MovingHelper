@@ -19,18 +19,18 @@ class DetailViewController: UIViewController {
   @IBOutlet weak var notesTextView: UITextView!
   
   var detailTask: Task?
-  var moveDate: NSDate!
+  var moveDate: Date!
   var inEditMode = false {
     didSet {
       if (inEditMode) {
-        titleTextField.borderStyle = .Bezel
+        titleTextField.borderStyle = .bezel
         notesTextView.layer.borderWidth = 1
-        notesTextView.editable = false
-        titleTextField.enabled = false
+        notesTextView.isEditable = false
+        titleTextField.isEnabled = false
       } else {
-        titleTextField.enabled = true
-        notesTextView.editable = true
-        titleTextField.borderStyle = .None
+        titleTextField.isEnabled = true
+        notesTextView.isEditable = true
+        titleTextField.borderStyle = .none
         notesTextView.layer.borderWidth = 0
       }
     }
@@ -40,10 +40,10 @@ class DetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    moveDate = NSUserDefaults.standardUserDefaults().objectForKey(UserDefaultKey.MovingDate.rawValue) as! NSDate
+    moveDate = UserDefaults.standard().object(forKey: UserDefaultKey.MovingDate.rawValue) as! Date
   }
   
-  override func viewWillAppear(animated: Bool) {
+  override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     configureForCurrentTask()
   }
@@ -74,12 +74,12 @@ class DetailViewController: UIViewController {
   }
   
   //MARK: Due Date-based UI updates
-  private func updateFromDueDate(dueDate: TaskDueDate) {
+  private func updateFromDueDate(_ dueDate: TaskDueDate) {
     daysRemainingLabel.text = dueDate.daysFromDueDate(moveDate)
     if dueDate.isOverdueForMoveDate(moveDate) {
-      daysRemainingLabel.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.5)
+      daysRemainingLabel.backgroundColor = UIColor.red().withAlphaComponent(0.5)
     } else {
-      daysRemainingLabel.backgroundColor = UIColor.greenColor().colorWithAlphaComponent(0.5)
+      daysRemainingLabel.backgroundColor = UIColor.green().withAlphaComponent(0.5)
     }
   }
 }
@@ -87,11 +87,11 @@ class DetailViewController: UIViewController {
 //MARK: - UIPickerView Data Source Extension
 
 extension DetailViewController: UIPickerViewDataSource {
-  func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+  func numberOfComponents(in pickerView: UIPickerView) -> Int {
     return 1
   }
   
-  func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+  func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
     return 6
   }
 }
@@ -99,11 +99,11 @@ extension DetailViewController: UIPickerViewDataSource {
 //MARK: - UIPickerView Delegate Extension
 
 extension DetailViewController: UIPickerViewDelegate {
-  func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+  func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     return TaskDueDate.fromIndex(row).getTitle()
   }
   
-  func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
     let dueDate = TaskDueDate.fromIndex(row)
     updateFromDueDate(dueDate)
   }

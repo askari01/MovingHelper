@@ -14,5 +14,5 @@ public protocol TaskUpdatedDelegate {
   
   - parameter task: The updated task.
   */
-  func taskUpdated(task: Task)
+  func taskUpdated(_ task: Task)
 }

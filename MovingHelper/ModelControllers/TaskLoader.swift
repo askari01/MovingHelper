@@ -13,9 +13,9 @@ Struct to load tasks from JSON.
 */
 public struct TaskLoader {
   
-  static func loadSavedTasksFromJSONFile(fileName: FileName) -> [Task]? {
+  static func loadSavedTasksFromJSONFile(_ fileName: FileName) -> [Task]? {
     let path = fileName.jsonFileName().pathInDocumentsDirectory()
-    if let data = NSData(contentsOfFile: path) {
+    if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
       return tasksFromData(data)
     } else {
       return nil
@@ -27,9 +27,9 @@ public struct TaskLoader {
   - returns: The stock moving tasks included with the app.
   */
   public static func loadStockTasks() -> [Task] {
-    if let path = NSBundle.mainBundle()
+    if let path = Bundle.main()
       .pathForResource(FileName.StockTasks.rawValue, ofType: "json"),
-      data = NSData(contentsOfFile: path),
+      data = try? Data(contentsOf: URL(fileURLWithPath: path)),
       tasks = tasksFromData(data) {
         return tasks
     }
@@ -39,9 +39,9 @@ public struct TaskLoader {
     return [Task]()
   }
   
-  private static func tasksFromData(data: NSData) -> [Task]? {
+  private static func tasksFromData(_ data: Data) -> [Task]? {
     do {
-        let arrayOfTaskDictionaries = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [NSDictionary]
+        let arrayOfTaskDictionaries = try JSONSerialization.jsonObject(with: data, options: []) as? [NSDictionary]
         return Task.tasksFromArrayOfJSONDictionaries(arrayOfTaskDictionaries!)
     } catch let error{
         print("error")

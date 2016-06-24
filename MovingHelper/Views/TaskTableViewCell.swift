@@ -14,20 +14,20 @@ public class TaskTableViewCell: UITableViewCell {
   @IBOutlet var notesLabel: UILabel!
   @IBOutlet public var checkbox: Checkbox!
   
-  public func configureForTask(task: Task) {
+  public func configureForTask(_ task: Task) {
     titleLabel.text = task.title
     notesLabel.text = task.notes
     configureForDoneState(task.done)
   }
   
-  func configureForDoneState(done: Bool) {
+  func configureForDoneState(_ done: Bool) {
     checkbox.isChecked = done
     if done {
-      backgroundColor = .lightGrayColor()
+      backgroundColor = .lightGray()
       titleLabel.alpha = 0.5
       notesLabel.alpha = 0.5
     } else {
-      backgroundColor = .whiteColor()
+      backgroundColor = .white()
       titleLabel.alpha = 1
       notesLabel.alpha = 1
     }

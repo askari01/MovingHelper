@@ -21,8 +21,8 @@ public extension NSDictionary {
   Checks a dictionary for a value for a given key, and returns either its
   String value or an empty string.
   
-  :param: key: The key to use to check the dictionary
-  :returns: The found string, or an empty string if it was not found.
+  - parameter key:: The key to use to check the dictionary
+  - returns: The found string, or an empty string if it was not found.
   */
   public func safeString(key: String) -> String {
     //Is there a value for the key?
@@ -41,8 +41,8 @@ public extension NSDictionary {
   Checks a dictionary for a value for a given key, and returns either its
   integer value or zero.
   
-  :param: key: The key to use to check the dictionary
-  :returns: The found number, or zero if it was not found.
+  - parameter key:: The key to use to check the dictionary
+  - returns: The found number, or zero if it was not found.
   */
   public func safeInt(key: String) -> Int {
     //Is there a value for the key?
@@ -59,8 +59,8 @@ public extension NSDictionary {
   Checks a dictionary for a value for a given key, and returns either its
   boolean value or false.
   
-  :param: key: The key to use to check the dictionary
-  :returns: The found boolean value, or false if it was not found.
+  - parameter key:: The key to use to check the dictionary
+  - returns: The found boolean value, or false if it was not found.
   */
   public func safeBoolean(key:String) -> Bool {
     //Is there a value for the key?

@@ -15,7 +15,7 @@ the same as the name of the class.
 public extension UITableViewCell {
   
   /**
-  :returns: The cell identifier based on the class's name, but not tied
+  - returns: The cell identifier based on the class's name, but not tied
   to the project bundle. A class of FooTableViewCell would return "FooTableViewCell" as the identifier.
   */
   public static func cellIdentifierFromClassName() -> String {

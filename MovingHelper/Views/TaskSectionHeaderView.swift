@@ -32,8 +32,8 @@ public class TaskSectionHeaderView: UITableViewCell {
   /**
   Configures the view based on the task due date and the user's move date.
   
-  :param: dueDate  The due date for the current section
-  :param: moveDate The user's move date.
+  - parameter dueDate:  The due date for the current section
+  - parameter moveDate: The user's move date.
   */
   func configureForDueDate(dueDate: TaskDueDate, moveDate: NSDate) {
     sectionNameLabel.text = dueDate.getTitle()

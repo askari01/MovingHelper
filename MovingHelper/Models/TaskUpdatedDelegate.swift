@@ -12,7 +12,7 @@ public protocol TaskUpdatedDelegate {
   /**
   Called whenever any task is updated.
   
-  :param: task The updated task.
+  - parameter task: The updated task.
   */
   func taskUpdated(task: Task)
 }

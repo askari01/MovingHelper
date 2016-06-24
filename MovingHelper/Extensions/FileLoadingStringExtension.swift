@@ -20,9 +20,9 @@ extension String {
   */
   func pathInDocumentsDirectory() -> String {
     let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-    if let last = urls.last as? NSURL,
-      documentsDirectory = last.path {
-        return documentsDirectory.stringByAppendingPathComponent(self)
+    if let last = urls.last,
+        documentsDirectory = last.path {
+        return (documentsDirectory as NSString).stringByAppendingPathComponent(self)
     }
     
     //Fall-through

@@ -19,7 +19,7 @@ struct SectionSplitter {
       return task.dueDate == dueDate
     }
     
-    tasks.sort({ $0.taskID > $1.taskID })
+    tasks.sortInPlace({ $0.taskID > $1.taskID })
     return tasks
   }
   

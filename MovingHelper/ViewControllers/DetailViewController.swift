@@ -99,7 +99,7 @@ extension DetailViewController: UIPickerViewDataSource {
 //MARK: - UIPickerView Delegate Extension
 
 extension DetailViewController: UIPickerViewDelegate {
-  func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+  func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
     return TaskDueDate.fromIndex(row).getTitle()
   }
   

@@ -17,7 +17,7 @@ public func == (lhs: Task, rhs: Task) -> Bool {
 /**
 The main representation of a moving task.
 */
-public class Task: Printable, Equatable {
+public class Task: CustomStringConvertible, Equatable {
   
   //MARK: Constants
   
@@ -40,10 +40,10 @@ public class Task: Printable, Equatable {
   /**
   Initializes a task with required values
   
-  :param: aTitle   The title of the task
-  :param: aDueDate The due date of the task
+  - parameter aTitle:   The title of the task
+  - parameter aDueDate: The due date of the task
   
-  :returns: The created task with an assigned ID
+  - returns: The created task with an assigned ID
   */
   public init(aTitle: String, aDueDate: TaskDueDate) {
     title = aTitle
@@ -54,9 +54,9 @@ public class Task: Printable, Equatable {
   /**
   Initializes a task from JSON.
   
-  :param: fromJSON The NSDictionary with the data regarding the task.
+  - parameter fromJSON: The NSDictionary with the data regarding the task.
   
-  :returns: The instantiated task object.
+  - returns: The instantiated task object.
   */
   public init(fromJSON: NSDictionary) {
     title = fromJSON.safeString(TaskJSONKey.Title.rawValue)
@@ -94,7 +94,7 @@ public class Task: Printable, Equatable {
   //MARK: Identifier generation
   
   /**
-  :returns: The next sequential identifier so all task identifiers are unique.
+  - returns: The next sequential identifier so all task identifiers are unique.
   */
   private static func nextIdentifier() -> Int {
     let defaults = NSUserDefaults.standardUserDefaults()

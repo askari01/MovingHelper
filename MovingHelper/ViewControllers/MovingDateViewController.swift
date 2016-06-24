@@ -55,7 +55,7 @@ class MovingDateViewController: UIViewController {
     twoMonths.month = 2
     let updatedDate = currentCalendar.dateByAddingComponents(twoMonths,
       toDate: today,
-      options: .allZeros)
+      options: [])
     return updatedDate!
   }
   
@@ -65,10 +65,10 @@ class MovingDateViewController: UIViewController {
     let updatedDate = whenMovingDatePicker.date.startOfDay()
     let today = NSDate.startOfToday()
     
-    let components = NSCalendar.currentCalendar().components(.CalendarUnitDay,
+    let components = NSCalendar.currentCalendar().components(.Day,
       fromDate: today,
       toDate: updatedDate,
-      options: nil)
+      options: [])
     
     daysLeftLabel.text = NSString(format: LocalizedStrings.daysLeftFormat, components.day) as String
   }

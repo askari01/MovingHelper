@@ -47,7 +47,7 @@ public class MasterViewController: UITableViewController {
       let segueIdentifier: SegueIdentifier = SegueIdentifier(rawValue: identifier)!
       switch segueIdentifier {
       case .ShowDetailVCSegue:
-        if let indexPath = self.tableView.indexPathForSelectedRow() {
+        if let indexPath = self.tableView.indexPathForSelectedRow {
           let task = taskForIndexPath(indexPath)
           (segue.destinationViewController as! DetailViewController).detailTask = task
         }
@@ -67,9 +67,9 @@ public class MasterViewController: UITableViewController {
     let index = task.dueDate.getIndex()
     let dueDateTasks = sections[index]
     
-    var tasksWithDifferentID = filter(dueDateTasks) { $0.taskID != task.taskID }
+    var tasksWithDifferentID = dueDateTasks.filter { $0.taskID != task.taskID }
     tasksWithDifferentID.append(task)
-    tasksWithDifferentID.sort({ $0.taskID > $1.taskID })
+    tasksWithDifferentID.sortInPlace({ $0.taskID > $1.taskID })
     
     sections[index] = tasksWithDifferentID
     tableView.reloadData()
@@ -124,7 +124,7 @@ extension MasterViewController: MovingDateDelegate {
 
 //MARK: - Table View Data Source Extension
 
-extension MasterViewController : UITableViewDataSource {
+extension MasterViewController {
   
   private func taskForIndexPath(indexPath: NSIndexPath) -> Task {
     let tasks = tasksForSection(indexPath.section)
